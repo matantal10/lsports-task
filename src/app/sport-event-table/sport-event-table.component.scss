@@ -40,24 +40,27 @@
 
       .btns {
         display: flex;
+        padding: 5px;
 
-        .edit-btn {
+        .btn {
           display: flex;
           font-size: 12px;
           color: white;
-          background-color: #19abda;
           padding: 5px;
+          margin: 1px;
           border-radius: 5px;
 
-        }
+          &.edit-btn {
+            background-color: #0b5dc0;
+          }
 
-        .save-btn {
-          font-size: 12px;
-          color: white;
-          background-color: #3d8015;
-          display: flex;
-          padding: 5px;
-          border-radius: 5px;
+          &.save-btn {
+            background-color: #3d8015;
+          }
+
+          &.delete-btn {
+            background-color: #c01d1d;
+          }
         }
       }
     }
@@ -77,4 +80,7 @@
   }
 
 }
+
+
+
 

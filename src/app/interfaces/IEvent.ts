@@ -1,6 +1,7 @@
 
 
 export interface IEvent {
+  id: string
   sportName: string;
   location: string;
   league: string;

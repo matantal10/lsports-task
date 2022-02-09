@@ -19,9 +19,10 @@
         </td>
         <td>
           <div class="btns">
-            <div class="save-btn" *ngIf="isEdit && currentRow === entity; else editMode" (click)="saveEvent(entity)">SAVE</div>
+            <div class="btn save-btn" *ngIf="isEdit && currentRow === entity; else editMode" (click)="saveEvent(entity)">SAVE</div>
             <ng-template #editMode>
-              <div class="edit-btn" (click)="editEvent(entity)">EDIT</div>
+              <div class="btn edit-btn" (click)="editEvent(entity)">EDIT</div>
+              <div class="btn delete-btn" (click)="deleteEvent(entity)">DELETE</div>
             </ng-template>
           </div>
         </td>

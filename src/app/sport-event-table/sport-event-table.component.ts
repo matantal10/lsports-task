@@ -38,6 +38,20 @@ export class SportEventTableComponent implements OnInit {
   }
 
   addNewEvent() {
+    this.isEdit = true;
+    this.currentRow = this.eventData.createNewEvent();
+    this.currentRow.id = this.maxId();
+    this.eventTableList.push(this.currentRow);
+  }
 
+  deleteEvent(event: IEvent) {
+    const index = this.eventTableList.findIndex(entity => entity.id === event.id);
+    this.eventTableList.splice(index, 1);
+  }
+
+  private maxId(): number {
+    let maxid: number = 1;
+
+    return maxid;
   }
 }
