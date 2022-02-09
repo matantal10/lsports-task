@@ -1,7 +1,36 @@
 
 .page-events {
   display: flex;
-  padding: 5px;
+  padding: 20px;
+  flex-direction: column;
+  width: 46%;
+
+  .add-event {
+    display: flex;
+    justify-content: flex-end;
+
+    .add-btn {
+      width: 25px;
+      height: 25px;
+      font-weight: bolder;
+      border: 1px solid black;
+      border-radius: 50%;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        color: white;
+        background-color: black;
+      }
+
+      &:active {
+        background-color: white;
+        color: black;
+      }
+    }
+  }
 
   .table-container {
     table  {
@@ -34,9 +63,12 @@
       }
     }
 
+
+
     th, td {
       border-bottom: 1px solid #ddd;
       padding: 10px;
+      width: 140px;
 
       .btns {
         display: flex;
@@ -68,6 +100,7 @@
     th {
       text-align: center;
       height: 20px;
+      width: 140px;
       vertical-align: bottom;
     }
 
@@ -75,10 +108,29 @@
     td {
       text-align: center;
       height: 20px;
-      vertical-align: bottom;
+      width: 140px;
+      vertical-align: top;
+
+      input {
+        width: 120px;
+      }
     }
   }
 
+}
+
+
+
+.row {
+
+  &.expanded {
+    height: 140px;
+    display: block;
+  }
+
+  .content {
+   padding: 0px 20px;
+  }
 }
 
 

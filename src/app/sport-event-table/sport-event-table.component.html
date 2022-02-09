@@ -9,24 +9,31 @@
         <th *ngFor="let col of tableHeaders">
           {{col}}
         </th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr class="row" *ngFor="let entity of eventTableList" (click)="getAdditionalDetails(entity)">
-        <td *ngFor="let col of tableHeaders">
-          <div *ngIf="isEdit && currentRow === entity; else tableCell"><input type="text" [(ngModel)]="entity[col]"></div>
-          <ng-template #tableCell>{{entity[col]}}</ng-template>
-        </td>
-        <td>
-          <div class="btns">
-            <div class="btn save-btn" *ngIf="isEdit && currentRow === entity; else editMode" (click)="saveEvent(entity)">SAVE</div>
-            <ng-template #editMode>
-              <div class="btn edit-btn" (click)="editEvent(entity)">EDIT</div>
-              <div class="btn delete-btn" (click)="deleteEvent(entity)">DELETE</div>
+        <tr class="row" *ngFor="let entity of eventTableList"
+                        (click)="getAdditionalDetails(entity)"
+                        [ngClass]="isExpand && selectedRow === entity ? 'expanded' : ''">
+          <td *ngFor="let col of tableHeaders">
+            <div *ngIf="isEdit && currentRow === entity; else tableCell"><input type="text" [(ngModel)]="entity[col]"></div>
+            <ng-template #tableCell>
+              <div *ngIf="col !== 'startingTime'">{{entity[col]}}</div>
+              <div *ngIf="col === 'startingTime'">{{entity.startingTime | date}}</div>
             </ng-template>
-          </div>
-        </td>
-      </tr>
+          </td>
+          <td>
+            <div class="btns">
+              <div class="btn save-btn" *ngIf="isEdit && currentRow === entity; else editMode" (click)="saveEvent(entity)">SAVE</div>
+              <ng-template #editMode>
+                <div class="btn edit-btn" (click)="editEvent(entity)">EDIT</div>
+                <div class="btn delete-btn" (click)="deleteEvent(entity)">DELETE</div>
+              </ng-template>
+            </div>
+          </td>
+          <div *ngIf="isExpand && selectedRow === entity" class="content">{{entity.additionalData}}</div>
+        </tr>
       </tbody>
     </table>
   </div>
