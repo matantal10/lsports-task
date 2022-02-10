@@ -54,6 +54,7 @@ export class SportEventTableComponent implements OnInit {
         if(this.isToDeleteEvent) {
           const index = this.eventTableList.findIndex(entity => Number(entity.id) ===  Number(event.id));
           this.eventTableList.splice(index, 1);
+          this.isEdit = false;
         }
       });
     }, 60000)
