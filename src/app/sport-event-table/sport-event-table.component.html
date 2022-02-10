@@ -15,12 +15,13 @@
       <tbody>
         <tr class="row" *ngFor="let entity of eventTableList"
                         (click)="getAdditionalDetails(entity)"
-                        [ngClass]="isExpand && selectedRow === entity ? 'expanded' : ''">
+                        [ngClass]="[isExpand && selectedRow === entity ? 'expanded' : '',
+                                    entity.isAboutToStart && selectedRow === entity ? 'starting' : '']">
           <td *ngFor="let col of tableHeaders">
             <div *ngIf="isEdit && currentRow === entity; else tableCell"><input type="text" [(ngModel)]="entity[col]"></div>
             <ng-template #tableCell>
               <div *ngIf="col !== 'startingTime'">{{entity[col]}}</div>
-              <div *ngIf="col === 'startingTime'">{{entity.startingTime | date}}</div>
+              <div *ngIf="col === 'startingTime'">{{entity.startingTime |  date:'shortTime'}}</div>
             </ng-template>
           </td>
           <td>

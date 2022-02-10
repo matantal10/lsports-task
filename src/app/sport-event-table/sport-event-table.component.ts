@@ -19,13 +19,44 @@ export class SportEventTableComponent implements OnInit {
   nextId: number;
   isExpand = false;
   selectedRow: IEvent = null;
+  currentTime: number;
+  private isToDeleteEvent: boolean;
 
-  constructor(private eventData: EventDataService) { }
+  constructor(private eventData: EventDataService) {
+    this.setTimeOperations();
+  }
 
   ngOnInit(): void {
     this.eventTableList = this.eventData.getAllEvents();
+    this.sortTableByDate();
     this.maxId();
+  }
 
+
+  sortTableByDate(): void {
+    this.eventTableList.sort((a: IEvent, b) => {
+     return a.startingTime.getTime() - b.startingTime.getTime();
+    })
+  }
+
+  /** 1. measure current time for every minute, determine if the game begins in
+   *  less then an hour.
+   *
+   *  2. if the event date has passed the event will be erased from table.
+   */
+  setTimeOperations(): void {
+    setInterval(() => {
+      this.currentTime = new Date(Date.now()).getTime();
+      this.eventTableList.forEach((event: IEvent) => {
+        event.isAboutToStart = event.startingTime.getTime() - this.currentTime < 600000;
+        this.isToDeleteEvent = this.currentTime > event.startingTime.getTime();
+
+        if(this.isToDeleteEvent) {
+          const index = this.eventTableList.findIndex(entity => Number(entity.id) ===  Number(event.id));
+          this.eventTableList.splice(index, 1);
+        }
+      });
+    }, 60000)
   }
 
   getAdditionalDetails(event: IEvent) {
@@ -36,28 +67,32 @@ export class SportEventTableComponent implements OnInit {
   editEvent(event: IEvent) {
     this.isEdit = true;
     this.currentRow = event;
+    this.sortTableByDate();
   }
 
   saveEvent(event: IEvent) {
     this.isEdit = false;
     this.currentRow = null;
+    this.sortTableByDate();
   }
 
   addNewEvent() {
     if(!this.isEdit) {
       this.isEdit = true;
       this.currentRow = this.eventData.createNewEvent();
-      this.currentRow.id = this.nextId;
+      this.currentRow.id = this.nextId.toString();
       this.eventTableList.push(this.currentRow);
       this.maxId();
+      this.sortTableByDate();
     }
 
   }
 
   deleteEvent(event: IEvent) {
-    const index = this.eventTableList.findIndex(entity => entity.id === event.id);
+    const index = this.eventTableList.findIndex(entity => Number(entity.id) ===  Number(event.id));
     this.eventTableList.splice(index, 1);
     this.isEdit = false;
+    this.sortTableByDate();
   }
 
   private maxId(): void {

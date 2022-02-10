@@ -1,5 +1,5 @@
 
-
+//all fields are strings able due to ngModel binds to *ngFor
 export interface IEvent {
   id: string
   sportName: string;
@@ -8,4 +8,5 @@ export interface IEvent {
   teamsPlaying: string;
   startingTime: Date;
   additionalData: string;
+  isAboutToStart?: boolean | string;
 }
